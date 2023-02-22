@@ -50,3 +50,7 @@ modules.order
 Module.symvers
 Mkfile.old
 dkms.conf
+
+qemu-5.0.0/
+*.tar.gz
+*.zip
