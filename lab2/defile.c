@@ -1,7 +1,7 @@
-#define SUM(x) (x)+(x)
+#define MUL(x) x*x 
 #include <stdio.h>
 
 int main(void)
 {
-    printf("%d", SUM(4*3)*SUM(4*3));
+    printf("%d", MUL(6+3));
 }
