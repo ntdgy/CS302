@@ -20,14 +20,18 @@ int kern_init(void) {
 
     const char *message = "os is loading ...\n";
     cputs(message);
-    cputs("SUSTech Operating System");
-    double_puts("SUSTech Operating System");
-    double_puts("ILOVEOS");
+    idt_init();
+    intr_enable();
+    asm volatile("ebreak"::);
+
+    cputs("start testing illegal instructions");
+    asm volatile("mret"::);
+    cputs("end testing illegal instructions");
 
 
 
 
-    // clock_init(); 
+    clock_init(); 
     // ----------start-------------
 
 

@@ -140,6 +140,8 @@ void exception_handler(struct trapframe *tf) {
         case CAUSE_FAULT_FETCH:
             break;
         case CAUSE_ILLEGAL_INSTRUCTION:
+            cprintf("illegal instruction at 0x%016llx, instruction 0x%08x", tf->epc, *(uint32_t *)tf->epc);
+            tf->epc += 4;
             break;
         case CAUSE_BREAKPOINT:
             cprintf("ebreak caught at 0x%016llx\n", tf->epc);

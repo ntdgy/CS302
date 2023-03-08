@@ -60,16 +60,16 @@ int cputs(const char *str) {
     return cnt;
 }
 
-int double_puts(const char *str) {
-    int cnt = 0;
-    char c;
-    while ((c = *str++) != '\0') {
-        cputch(c, &cnt);
-        cputch(c, &cnt);
-    }
-    cputch('\n', &cnt);
-    return cnt;+
-}
+// int double_puts(const char *str) {
+//     int cnt = 0;
+//     char c;
+//     while ((c = *str++) != '\0') {
+//         cputch(c, &cnt);
+//         cputch(c, &cnt);
+//     }
+//     cputch('\n', &cnt);
+//     return cnt;+
+// }
 
 /* getchar - reads a single non-zero character from stdin */
 int getchar(void) {
