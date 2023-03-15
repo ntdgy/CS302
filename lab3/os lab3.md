@@ -6,8 +6,8 @@
 
 4. 5 一起做了
 
-   ![image-20230301163630233](/home/dgy/.config/Typora/typora-user-images/image-20230301163630233.png)
+   ![image-20230301163630233](pic/image-20230301163630233.png)
 
-   ![image-20230301163700501](/home/dgy/.config/Typora/typora-user-images/image-20230301163700501.png)
+   ![image-20230301163700501](pic/image-20230301163700501.png)
 
-   ![image-20230301163435720](/home/dgy/.config/Typora/typora-user-images/image-20230301163435720.png)
+   ![image-20230301163435720](pic/image-20230301163435720.png)

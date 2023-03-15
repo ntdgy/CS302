@@ -9,6 +9,7 @@
 #include <stdio.h>
 #include <string.h>
 #include <trap.h>
+#include <sbi.h>
 
 int kern_init(void) __attribute__((noreturn));
 void grade_backtrace(void);
@@ -22,11 +23,13 @@ int kern_init(void) {
     cputs(message);
     idt_init();
     intr_enable();
-    asm volatile("ebreak"::);
+    // asm volatile("ebreak"::);
 
-    cputs("start testing illegal instructions");
-    asm volatile("mret"::);
-    cputs("end testing illegal instructions");
+    // cputs("start testing illegal instructions");
+    // asm volatile("mret"::);
+    // cputs("end testing illegal instructions");
+    cputs("The system will close.\n");
+    sbi_shutdown();
 
 
 
