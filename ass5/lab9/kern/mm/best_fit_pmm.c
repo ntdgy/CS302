@@ -4,10 +4,10 @@
 // #include <best_fit_pmm.h>
 // #include <stdio.h>
 
-// free_area_t free_area;
+// free_area_t free_area1;
 
-// #define free_list (free_area.free_list)
-// #define nr_free (free_area.nr_free)
+// #define free_list1 (free_area1.free_list)
+// #define nr_free1 (free_area1.nr_free)
 
 // static void
 // best_fit_init(void)

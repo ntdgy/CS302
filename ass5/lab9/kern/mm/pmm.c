@@ -136,6 +136,7 @@ void pmm_init(void) {
 }
 
 static void check_alloc_page(void) {
+    cprintf("starting check\n");
     pmm_manager->check();
     cprintf("check_alloc_page() succeeded!\n");
 }
