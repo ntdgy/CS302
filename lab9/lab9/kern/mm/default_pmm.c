@@ -147,17 +147,33 @@ default_free_pages(struct Page *base, size_t n) {
                 break;
             } else if (list_next(le) == &free_list) {
                 list_add(le, &(base->page_link));
+                break;
             }
         }
     }
 
-    //-----------------------合并空闲块--------------------
+    list_entry_t *next_entry = list_next(&base->page_link);
+    if (next_entry!=&free_list){
+        struct Page *next = le2page(next_entry, page_link);
+        if(next - base == base->property){
+            base->property += next->property;
+            next->property = 0;
+            ClearPageProperty(next);
+            list_del(&(next->page_link));
+        }
+    }
+    list_entry_t *next_entry = list_prev(&base->page_link);
+    if (next_entry!=&free_list){
+        struct Page *next = le2page(next_entry, page_link);
+        if(base - next == next->property){
+            next->property += base->property;
+            base->property = 0;
+            ClearPageProperty(base);
+            list_del(&(base->page_link));
+        }
+    }
 
 
-    
-
-
-    //---------------------------------------------------
 
 }
 
