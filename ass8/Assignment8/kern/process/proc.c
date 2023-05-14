@@ -844,7 +844,7 @@ static int
 init_main(void *arg) {
     size_t nr_free_pages_store = nr_free_pages();
     size_t kernel_allocated_store = kallocated();
-
+    cprintf("Hello, OS World!\n");
     // int pid = kernel_thread(user_main, NULL, 0);
     // if (pid <= 0) {
     //     panic("create user_main failed.\n");
@@ -852,11 +852,11 @@ init_main(void *arg) {
     // extern void check_sync(void);
     // check_sync();                // check philosopher sync problem
 
-    //extern void check_milk(void);
-    //check_milk();  
+    extern void check_milk(void);
+    check_milk();  
 
-    extern void check_exercise(void);
-    check_exercise();                  
+    // extern void check_exercise(void);
+    // check_exercise();                  
 
     while (do_wait(0, NULL) == 0) {
         schedule();

@@ -3,7 +3,7 @@
 
 #include <defs.h>
 #include <atomic.h>
-#include <wait.h>
+#include "wait.h"
 
 typedef struct {
     int value;

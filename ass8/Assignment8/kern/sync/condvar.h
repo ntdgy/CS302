@@ -2,10 +2,23 @@
 #define __KERN_SYNC_MOINTOR_CONDVAR_H__
 
 #include <sem.h>
+typedef struct monitor monitor_t;
+
 
 typedef struct condvar{
 //================your code=====================
+    semaphore_t sem;       
+    int count;  
+    monitor_t *owner;            
 } condvar_t;
+
+typedef struct monitor {
+//================your code=====================
+    semaphore_t mutex;
+    semaphore_t next;
+    int next_count;     
+    condvar_t *cv;  
+} monitor_t;
 
 
 

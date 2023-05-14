@@ -8,7 +8,7 @@
 
 #define SLEEP_TIME 10
 
-semaphore_t mutex; 
+semaphore_t mutex1; 
 condvar_t p1; 
 struct proc_struct *pdad,*pmom,*psister,*pyou;
 
@@ -19,13 +19,13 @@ void mom(int i)
     {
         //sleep(rand() % 2 + 1);
 
-        down(&mutex);
+        down(&mutex1);
         cprintf("Mom checks the fridge.\n");
         while (milk > 0)
         {
             cprintf("Mom waiting.\n");
-            //pthread_cond_wait(&cond, &mutex);
-            cond_wait(&p1,&mutex);
+            //pthread_cond_wait(&cond, &mutex1);
+            cond_wait(&p1,&mutex1);
         }
         cprintf("Mom goes to buy milk...\n");
         cprintf("Mon comes back.\n");
@@ -35,7 +35,7 @@ void mom(int i)
             milk += 100;
             cprintf("Mom puts milk in fridge and leaves.\n");
         }
-        up(&mutex);
+        up(&mutex1);
         do_sleep(100);
     }
 }
@@ -44,13 +44,13 @@ void sister(int i)
     while (1)
     {
         //sleep(rand() % 2 + 1);
-        down(&mutex);
+        down(&mutex1);
         cprintf("sis checks the fridge.\n");
         while (milk > 0)
         {
             cprintf("sis waiting.\n");
-        //pthread_cond_wait(&cond, &mutex);;
-        cond_wait(&p1, &mutex);
+        //pthread_cond_wait(&cond, &mutex1);;
+        cond_wait(&p1, &mutex1);
         }
             cprintf("sis goes to buy milk...\n");
             cprintf("sis comes back.\n");
@@ -60,7 +60,7 @@ void sister(int i)
             milk += 100;
             cprintf("sis puts milk in fridge and leaves.\n");
         }
-        up(&mutex);
+        up(&mutex1);
         do_sleep(100);
     }
 }
@@ -73,7 +73,7 @@ void dad(int i)
     while (1)
     {
         //sleep(rand() % 2 + 1);
-        down(&mutex);
+        down(&mutex1);
         cprintf("Dad checks the fridge.\n");
         if (milk == 0)
         {
@@ -86,7 +86,7 @@ void dad(int i)
             milk -= 20;
             cprintf("Dad eating 20 milk.\n");
         }
-        up(&mutex);
+        up(&mutex1);
         do_sleep(100);
 
     }
@@ -97,7 +97,7 @@ void you(int i){
     while (1)
     {
         //sleep(rand() % 2 + 1);
-        down(&mutex);
+        down(&mutex1);
         cprintf("you checks the fridge.\n");
         if (milk == 0)
         {
@@ -110,7 +110,7 @@ void you(int i){
             milk -= 20;
             cprintf("you eating 20 milk.\n");
         }
-        up(&mutex);
+        up(&mutex1);
         do_sleep(100);
         
     }
@@ -120,7 +120,7 @@ void you(int i){
 void check_milk(void){
     int pids[4];
     int milk = 100;
-    sem_init(&(mutex),1);
+    sem_init(&(mutex1),1);
     int i =0;
     cond_init(&p1);
     pids[0]=kernel_thread(dad, (void *)i, 0);

@@ -1,0 +1,36 @@
+[
+  {
+    "arguments": [
+      "/usr/bin/riscv64-unknown-elf-gcc",
+      "-Ikern/sync/",
+      "-mcmodel=medany",
+      "-O2",
+      "-std=gnu99",
+      "-Wno-unused",
+      "-fno-builtin",
+      "-Wall",
+      "-nostdinc",
+      "-fno-stack-protector",
+      "-ffunction-sections",
+      "-fdata-sections",
+      "-Ilibs/",
+      "-Ikern/debug/",
+      "-Ikern/driver/",
+      "-Ikern/trap/",
+      "-Ikern/mm/",
+      "-Ikern/libs/",
+      "-Ikern/sync/",
+      "-Ikern/fs/",
+      "-Ikern/process",
+      "-Ikern/schedule",
+      "-Ikern/syscall",
+      "-c",
+      "-o",
+      "obj/kern/sync/condvar.o",
+      "kern/sync/condvar.c"
+    ],
+    "directory": "/home/dgy/github/os/ass8/Assignment8",
+    "file": "/home/dgy/github/os/ass8/Assignment8/kern/sync/condvar.c",
+    "output": "/home/dgy/github/os/ass8/Assignment8/obj/kern/sync/condvar.o"
+  }
+]
