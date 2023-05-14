@@ -147,34 +147,30 @@ default_free_pages(struct Page *base, size_t n) {
                 break;
             } else if (list_next(le) == &free_list) {
                 list_add(le, &(base->page_link));
-                break;
             }
         }
     }
 
-    list_entry_t *next_entry = list_next(&base->page_link);
-    if (next_entry!=&free_list){
-        struct Page *next = le2page(next_entry, page_link);
-        if(next - base == base->property){
-            base->property += next->property;
-            next->property = 0;
-            ClearPageProperty(next);
-            list_del(&(next->page_link));
-        }
-    }
-    next_entry = list_prev(&base->page_link);
-    if (next_entry!=&free_list){
-        struct Page *next = le2page(next_entry, page_link);
-        if(base - next == next->property){
-            next->property += base->property;
-            base->property = 0;
+    list_entry_t* le = list_prev(&(base->page_link));
+    if (le != &free_list) {
+        p = le2page(le, page_link);
+        if (p + p->property == base) {
+            p->property += base->property;
             ClearPageProperty(base);
             list_del(&(base->page_link));
+            base = p;
         }
     }
 
-
-
+    le = list_next(&(base->page_link));
+    if (le != &free_list) {
+        p = le2page(le, page_link);
+        if (base + base->property == p) {
+            base->property += p->property;
+            ClearPageProperty(p);
+            list_del(&(p->page_link));
+        }
+    }
 }
 
 static size_t
@@ -233,56 +229,10 @@ basic_check(void) {
     free_page(p2);
 }
 
-
+// LAB2: below code is used to check the first fit allocation algorithm (your EXERCISE 1) 
+// NOTICE: You SHOULD NOT CHANGE basic_check, default_check functions!
 static void
 default_check(void) {
-    int count = 0, total = 0;
-    list_entry_t *le = &free_list;
-    while ((le = list_next(le)) != &free_list) {
-        struct Page *p = le2page(le, page_link);
-        assert(PageProperty(p));
-        count ++, total += p->property;
-    }
-    assert(total == nr_free_pages());
-
-    basic_check();
-
-    struct Page *p0 = alloc_pages(5), *p1, *p2;
-    assert(p0 != NULL);
-    assert(!PageProperty(p0));
-
-    list_entry_t free_list_store = free_list;
-    list_init(&free_list);
-    assert(list_empty(&free_list));
-    assert(alloc_page() == NULL);
-
-    unsigned int nr_free_store = nr_free;
-    nr_free = 0;
-
-    free_pages(p0 + 2, 3);
-    assert(alloc_pages(4) == NULL);
-    assert(PageProperty(p0 + 2) && p0[2].property == 3);
-    assert((p1 = alloc_pages(3)) != NULL);
-    assert(alloc_page() == NULL);
-    assert(p0 + 2 == p1);
-
-    p2 = p0 + 1;
-    free_page(p0);
-    free_pages(p1, 3);
-    assert(PageProperty(p0) && p0->property == 1);
-    assert(PageProperty(p1) && p1->property == 3);
-
-    assert((p0 = alloc_page()) == p2 - 1);
-    free_page(p0);
-    assert((p0 = alloc_pages(2)) == p2 + 1);
-
-    free_pages(p0, 2);
-    free_page(p2);
-}
-
-
-static void
-firstfit_check_final(void) {
     int count = 0, total = 0;
     list_entry_t *le = &free_list;
     while ((le = list_next(le)) != &free_list) {
@@ -351,8 +301,6 @@ const struct pmm_manager default_pmm_manager = {
     .alloc_pages = default_alloc_pages,
     .free_pages = default_free_pages,
     .nr_free_pages = default_nr_free_pages,
-    // .check = default_check,
-    // 合并空闲块之后，请将上面的check注释，下面的check解除注释，进行测试
-    .check = firstfit_check_final,
+    .check = default_check,
 };
 
